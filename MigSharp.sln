@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EA4A057D-7277-4869-BA9E-6764C7736EC1}"
 	ProjectSection(SolutionItems) = preProject
 		CHANGES.txt = CHANGES.txt
@@ -25,13 +25,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MigSharp.SqlServer.NUnit", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MigSharp.Teradata.NUnit", "MigSharp.Teradata.NUnit\MigSharp.Teradata.NUnit.csproj", "{F286D4CC-B742-40BB-9FD2-F7380EBC6C64}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MigSharp.SqlServerCe.NUnit", "MigSharp.SqlServerCe.NUnit\MigSharp.SqlServerCe.NUnit.csproj", "{3BB17235-A896-4BF4-B25F-501EFF71F777}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MigSharp.SQLite.NUnit", "MigSharp.SQLite.NUnit\MigSharp.SQLite.NUnit.csproj", "{B7C9C7E2-3199-436C-ADF6-8B63B751696C}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Migrate", "Migrate\Migrate.csproj", "{4100DFDA-C758-4177-8478-116CBEC6E19A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MigSharp.MySql.NUnit", "MigSharp.MySql.NUnit\MigSharp.MySql.NUnit.csproj", "{9D276D29-CE67-4527-ACE5-02329E769144}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,22 +53,10 @@ Global
 		{F286D4CC-B742-40BB-9FD2-F7380EBC6C64}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F286D4CC-B742-40BB-9FD2-F7380EBC6C64}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F286D4CC-B742-40BB-9FD2-F7380EBC6C64}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3BB17235-A896-4BF4-B25F-501EFF71F777}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3BB17235-A896-4BF4-B25F-501EFF71F777}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3BB17235-A896-4BF4-B25F-501EFF71F777}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3BB17235-A896-4BF4-B25F-501EFF71F777}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B7C9C7E2-3199-436C-ADF6-8B63B751696C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B7C9C7E2-3199-436C-ADF6-8B63B751696C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B7C9C7E2-3199-436C-ADF6-8B63B751696C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B7C9C7E2-3199-436C-ADF6-8B63B751696C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4100DFDA-C758-4177-8478-116CBEC6E19A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4100DFDA-C758-4177-8478-116CBEC6E19A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4100DFDA-C758-4177-8478-116CBEC6E19A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4100DFDA-C758-4177-8478-116CBEC6E19A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9D276D29-CE67-4527-ACE5-02329E769144}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9D276D29-CE67-4527-ACE5-02329E769144}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9D276D29-CE67-4527-ACE5-02329E769144}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9D276D29-CE67-4527-ACE5-02329E769144}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
