@@ -95,6 +95,8 @@ namespace MigSharp.NUnit.Integration
             Assert.AreEqual(BootstrapMigration.TimestampColumnName, versioningTable.Columns[0].ColumnName);
             Assert.AreEqual(BootstrapMigration.ModuleColumnName, versioningTable.Columns[1].ColumnName);
             Assert.AreEqual(BootstrapMigration.TagColumnName, versioningTable.Columns[2].ColumnName);
+            Assert.AreEqual(BootstrapMigration.MigrationNameColumnName, versioningTable.Columns[3].ColumnName);
+            Assert.AreEqual(BootstrapMigration.AppliedDateColumnName, versioningTable.Columns[4].ColumnName);
 
             // assert Customer table was created
             Migration1 migration1 = new Migration1();
@@ -108,6 +110,8 @@ namespace MigSharp.NUnit.Integration
             Assert.AreEqual(Timestamps[0], versioningTable.Rows[0][0], "The timestamp of Migration1 is wrong.");
             Assert.AreEqual(MigrationExportAttribute.DefaultModuleName, versioningTable.Rows[0][1], "The module of Migration1 is wrong.");
             Assert.AreEqual(DBNull.Value, versioningTable.Rows[0][2], "The tag of Migration1 is wrong.");
+            Assert.AreEqual(typeof(Migration1).FullName, versioningTable.Rows[0][3], "Migration name does not match type of class");
+            Assert.AreNotEqual(DBNull.Value, versioningTable.Rows[0][4], "Should have AppliedDate");
         }
 
         [Test]

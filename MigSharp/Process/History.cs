@@ -110,10 +110,9 @@ namespace MigSharp.Process
                                                                            : DBNull.Value);
 
                 IDataParameter appliedDateParamter = command.AddParameter("@AppliedDate", DbType.DateTime,
-                                                                          entry.AppliedDate == DateTime.MinValue
+                                                                          entry.AppliedDate != DateTime.MinValue
                                                                               ? (object) entry.AppliedDate
                                                                               : DBNull.Value);
-
 
                 command.CommandText = string.Format(CultureInfo.InvariantCulture,
                                                     @"INSERT INTO ""{0}"" (""{1}"", ""{2}"", ""{3}"", ""{4}"", ""{5}"") VALUES ({6}, {7}, {8}, {9}, {10})",

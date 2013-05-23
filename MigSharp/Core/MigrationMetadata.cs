@@ -33,7 +33,13 @@ namespace MigSharp.Core
         /// </summary>
         public string Tag { get { return _tag; } }
 
-        public MigrationMetadata(long timestamp, string moduleName, string tag, string migrationName = null, DateTime? appliedDate = null)
+        public MigrationMetadata(long timestamp, string moduleName, string tag) 
+            : this(timestamp, moduleName, tag, string.Empty, DateTime.Now)
+        {
+                 
+        }
+
+        public MigrationMetadata(long timestamp, string moduleName, string tag, string migrationName, DateTime? appliedDate)
         {
             MigrationName = migrationName;
             AppliedDate = appliedDate;
