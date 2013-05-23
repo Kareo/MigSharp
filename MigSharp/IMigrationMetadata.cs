@@ -1,3 +1,4 @@
+using System;
 using MigSharp.Process;
 
 namespace MigSharp
@@ -11,5 +12,15 @@ namespace MigSharp
         /// Gets the timestamp of the migration.
         /// </summary>
         long Timestamp { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        string MigrationName { get;}
+
+        /// <summary>
+        /// 
+        /// </summary>
+        DateTime? AppliedDate { get;}
     }
 }

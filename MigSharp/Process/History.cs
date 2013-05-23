@@ -28,24 +28,26 @@ namespace MigSharp.Process
             return _actualEntries;
         }
 
-        public void Insert(long timestamp, string moduleName, string tag)
+        public void Insert(long timestamp, string moduleName, string tag, string migrationName, DateTime? appliedDate)
         {
-            _entriesToInsert.Add(new MigrationMetadata(timestamp, moduleName, tag));
+            _entriesToInsert.Add(new MigrationMetadata(timestamp, moduleName, tag, migrationName, appliedDate));
         }
 
         public void Delete(long timestamp, string moduleName)
         {
-            _entriesToDelete.Add(new MigrationMetadata(timestamp, moduleName, string.Empty)); // tag is not relevant
+            _entriesToDelete.Add(new MigrationMetadata(timestamp, moduleName, string.Empty, string.Empty, DateTime.MinValue)); // tag is not relevant
         }
 
         public void Load(IDbConnection connection, IDbTransaction transaction)
         {
             IDbCommand command = connection.CreateCommand();
             command.Transaction = transaction;
-            command.CommandText = string.Format(CultureInfo.InvariantCulture, "SELECT \"{0}\", \"{1}\", \"{2}\" FROM \"{3}\"",
+            command.CommandText = string.Format(CultureInfo.InvariantCulture, "SELECT \"{0}\", \"{1}\", \"{2}\", \"{3}\", \"{4}\"  FROM \"{5}\"",
                 BootstrapMigration.TimestampColumnName,
                 BootstrapMigration.ModuleColumnName,
                 BootstrapMigration.TagColumnName,
+                BootstrapMigration.MigrationNameColumnName,
+                BootstrapMigration.AppliedDateColumnName,
                 _tableName);
             Log.Verbose(LogCategory.Sql, command.CommandText);
 
@@ -57,14 +59,16 @@ namespace MigSharp.Process
                     long timestamp = Convert.ToInt64(reader[0], CultureInfo.InvariantCulture); // Oracle throws invalid cast exception if using reader[0].ToInt64(0)
                     string moduleName = reader.GetString(1);
                     string tag = reader.IsDBNull(2) ? null : reader.GetString(2);
-                    LoadEntry(timestamp, moduleName, tag);
+                    string migrationName = reader.IsDBNull(3) ? null : reader.GetString(3);
+                    DateTime appliedDate = reader.IsDBNull(4) ? DateTime.MinValue : reader.GetDateTime(4);
+                    LoadEntry(timestamp, moduleName, tag, migrationName, appliedDate);
                 }
             }
         }
 
-        internal void LoadEntry(long timestamp, string moduleName, string tag)
+        internal void LoadEntry(long timestamp, string moduleName, string tag, string migrationName, DateTime? appliedDate)
         {
-            var entry = new MigrationMetadata(timestamp, moduleName, tag);
+            var entry = new MigrationMetadata(timestamp, moduleName, tag, migrationName, appliedDate);
             _actualEntries.Add(entry);
         }
 
@@ -99,14 +103,31 @@ namespace MigSharp.Process
                 command.Transaction = transaction;
                 IDataParameter moduleNameParameter = command.AddParameter("@ModuleName", DbType.String, entry.ModuleName);
                 IDataParameter tagParameter = command.AddParameter("@Tag", DbType.String, !string.IsNullOrEmpty(entry.Tag) ? (object)entry.Tag : DBNull.Value);
-                command.CommandText = string.Format(CultureInfo.InvariantCulture, @"INSERT INTO ""{0}"" (""{1}"", ""{2}"", ""{3}"") VALUES ({4}, {5}, {6})",
-                    _tableName,
-                    BootstrapMigration.TimestampColumnName,
-                    BootstrapMigration.ModuleColumnName,
-                    BootstrapMigration.TagColumnName,
-                    entry.Timestamp.ToString(CultureInfo.InvariantCulture),
-                    _providerMetadata.GetParameterSpecifier(moduleNameParameter),
-                    _providerMetadata.GetParameterSpecifier(tagParameter));
+
+                IDataParameter migNameParameter = command.AddParameter("@MigrationName", DbType.String,
+                                                                       !string.IsNullOrEmpty(entry.MigrationName)
+                                                                           ? (object) entry.MigrationName
+                                                                           : DBNull.Value);
+
+                IDataParameter appliedDateParamter = command.AddParameter("@AppliedDate", DbType.DateTime,
+                                                                          entry.AppliedDate == DateTime.MinValue
+                                                                              ? (object) entry.AppliedDate
+                                                                              : DBNull.Value);
+
+
+                command.CommandText = string.Format(CultureInfo.InvariantCulture,
+                                                    @"INSERT INTO ""{0}"" (""{1}"", ""{2}"", ""{3}"", ""{4}"", ""{5}"") VALUES ({6}, {7}, {8}, {9}, {10})",
+                                                    _tableName,
+                                                    BootstrapMigration.TimestampColumnName,
+                                                    BootstrapMigration.ModuleColumnName,
+                                                    BootstrapMigration.TagColumnName,
+                                                    BootstrapMigration.MigrationNameColumnName,
+                                                    BootstrapMigration.AppliedDateColumnName,
+                                                    entry.Timestamp.ToString(CultureInfo.InvariantCulture),
+                                                    _providerMetadata.GetParameterSpecifier(moduleNameParameter),
+                                                    _providerMetadata.GetParameterSpecifier(tagParameter),
+                                                    _providerMetadata.GetParameterSpecifier(migNameParameter),
+                                                    _providerMetadata.GetParameterSpecifier(appliedDateParamter));
                 // note: we do not provide the timestamp as a parameter as the OracleOdbcProvider has an issue with it
                 executor.ExecuteNonQuery(command);
                 _actualEntries.Add(entry);

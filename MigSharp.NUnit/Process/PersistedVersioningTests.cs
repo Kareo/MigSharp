@@ -36,8 +36,8 @@ namespace MigSharp.NUnit.Process
         private static PersistedVersioning CreateVersioning()
         {
             var history = new History("TableName", MockRepository.GenerateStub<IProviderMetadata>());
-            history.LoadEntry(ExistingTimestampForDefaultModule, string.Empty, ExistingTagForDefaultModule);
-            history.LoadEntry(ExistingTimestampForTestModule, TestModule, ExistingTagForTestModule);
+            history.LoadEntry(ExistingTimestampForDefaultModule, string.Empty, ExistingTagForDefaultModule, string.Empty, null);
+            history.LoadEntry(ExistingTimestampForTestModule, TestModule, ExistingTagForTestModule, string.Empty, null);
             return new PersistedVersioning(history);
         }
     }

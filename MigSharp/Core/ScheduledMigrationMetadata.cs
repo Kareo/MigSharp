@@ -1,4 +1,6 @@
-﻿namespace MigSharp.Core
+﻿using System;
+
+namespace MigSharp.Core
 {
     internal class ScheduledMigrationMetadata : MigrationMetadata, IScheduledMigrationMetadata
     {
@@ -6,7 +8,8 @@
 
         public MigrationDirection Direction { get { return _direction; } }
 
-        public ScheduledMigrationMetadata(long timestamp, string moduleName, string tag, MigrationDirection direction) : base(timestamp, moduleName, tag)
+        public ScheduledMigrationMetadata(long timestamp, string moduleName, string tag, string migrationName, DateTime? appliedDate, MigrationDirection direction) 
+            : base(timestamp, moduleName, tag, migrationName, appliedDate)
         {
             _direction = direction;
         }

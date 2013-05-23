@@ -300,7 +300,13 @@ namespace MigSharp
                                                         ? timestampProviders[l.Metadata.ModuleName]
                                                         : timestampProviders[MigrationExportAttribute.DefaultModuleName];
 
-                            return new ImportedMigration(l.Value, new MigrationMetadata(timestampProvider.GetTimestamp(l.Value.GetType()), l.Metadata.ModuleName, l.Metadata.Tag));
+                            var metadata = new MigrationMetadata(timestampProvider.GetTimestamp(l.Value.GetType()),
+                                                                 l.Metadata.ModuleName,
+                                                                 l.Metadata.Tag,
+                                                                 l.Value.GetType().FullName,
+                                                                 DateTime.Now);
+
+                            return new ImportedMigration(l.Value, metadata);
                         }));
             Log.Info("Found {0} migration(s)", result.Count);
             return result;

@@ -90,6 +90,8 @@ namespace MigSharp.NUnit.Process
             public string Tag { get { return null; } }
             public string ModuleName { get { return string.Empty; } }
             public long Timestamp { get { return 1; } }
+            public string MigrationName { get; private set; }
+            public DateTime? AppliedDate { get; private set; }
             public MigrationDirection Direction { get { return MigrationDirection.Up; } }
         }
     }

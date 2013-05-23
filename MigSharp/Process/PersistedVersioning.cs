@@ -21,7 +21,7 @@ namespace MigSharp.Process
 
             if (metadata.Direction == MigrationDirection.Up)
             {
-                _history.Insert(metadata.Timestamp, metadata.ModuleName, metadata.Tag);
+                _history.Insert(metadata.Timestamp, metadata.ModuleName, metadata.Tag, metadata.MigrationName, metadata.AppliedDate);
             }
             else
             {
@@ -36,7 +36,7 @@ namespace MigSharp.Process
         {
             foreach (IMigrationMetadata metadata in containedMigrations)
             {
-                _history.Insert(metadata.Timestamp, metadata.ModuleName, metadata.Tag);
+                _history.Insert(metadata.Timestamp, metadata.ModuleName, metadata.Tag, metadata.MigrationName, metadata.AppliedDate);
             }
             StoreChanges(connection, transaction, executor);
         }

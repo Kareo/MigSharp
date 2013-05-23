@@ -91,7 +91,7 @@ namespace MigSharp.NUnit.Integration
             // assert Versioning table was created
             DataTable versioningTable = GetTable(_options.VersioningTableName);
             Assert.IsNotNull(versioningTable, string.Format(CultureInfo.CurrentCulture, "The '{0}' table was not created.", _options.VersioningTableName));
-            Assert.AreEqual(3, versioningTable.Columns.Count);
+            Assert.AreEqual(5, versioningTable.Columns.Count);
             Assert.AreEqual(BootstrapMigration.TimestampColumnName, versioningTable.Columns[0].ColumnName);
             Assert.AreEqual(BootstrapMigration.ModuleColumnName, versioningTable.Columns[1].ColumnName);
             Assert.AreEqual(BootstrapMigration.TagColumnName, versioningTable.Columns[2].ColumnName);

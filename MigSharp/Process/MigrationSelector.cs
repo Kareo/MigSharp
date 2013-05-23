@@ -40,14 +40,14 @@ namespace MigSharp.Process
                 where m.Metadata.Timestamp <= timestamp &&
                       !_executedMigrations.Any(x => comparer.Equals(x, m.Metadata))
                 orderby m.Metadata.Timestamp ascending
-                select new ApplicableMigration(m.Implementation, new ScheduledMigrationMetadata(m.Metadata.Timestamp, m.Metadata.ModuleName, m.Metadata.Tag, MigrationDirection.Up)));
+                select new ApplicableMigration(m.Implementation, new ScheduledMigrationMetadata(m.Metadata.Timestamp, m.Metadata.ModuleName, m.Metadata.Tag, m.Metadata.MigrationName, m.Metadata.AppliedDate, MigrationDirection.Up)));
 
             var applicableDownMigrations = new List<ApplicableMigration>(
                 from m in moduleMigrations
                 where m.Metadata.Timestamp > timestamp &&
                       _executedMigrations.Any(x => comparer.Equals(x, m.Metadata))
                 orderby m.Metadata.Timestamp descending
-                select new ApplicableMigration(m.Implementation, new ScheduledMigrationMetadata(m.Metadata.Timestamp, m.Metadata.ModuleName, m.Metadata.Tag, MigrationDirection.Down)));
+                select new ApplicableMigration(m.Implementation, new ScheduledMigrationMetadata(m.Metadata.Timestamp, m.Metadata.ModuleName, m.Metadata.Tag, m.Metadata.MigrationName, m.Metadata.AppliedDate, MigrationDirection.Down)));
 
             if (applicableDownMigrations.Any(m => !(m.Implementation is IReversibleMigration)))
             {
