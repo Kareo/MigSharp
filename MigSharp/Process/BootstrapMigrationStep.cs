@@ -15,7 +15,7 @@ namespace MigSharp.Process
         private readonly IMigration _migration;
         private readonly IProvider _provider;
         private readonly IProviderMetadata _providerMetadata;
-        private static readonly Regex goStatementRegex = new Regex(@"\s*GO\s*", RegexOptions.Compiled);
+        private static readonly Regex goStatementRegex = new Regex(@"^\s*GO\s*$", RegexOptions.Compiled | RegexOptions.Multiline | RegexOptions.IgnoreCase);
 
         protected IMigration Migration { get { return _migration; } }
         protected IProviderMetadata ProviderMetadata { get { return _providerMetadata; } }
