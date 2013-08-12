@@ -3,7 +3,7 @@
   <metadata>
     <id>MigSharp.Kareo</id>
     <version>$version$</version>
-    <title>Mig#</title>
+    <title>MigSharp.Kareo</title>
     <authors>dradovic, reliablity</authors>
     <owners />
     <licenseUrl>https://github.com/Kareo/MigSharp/blob/master/LICENSE.txt</licenseUrl>

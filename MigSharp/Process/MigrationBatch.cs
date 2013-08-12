@@ -17,6 +17,7 @@ namespace MigSharp.Process
 
         public event EventHandler<MigrationEventArgs> StepExecuting;
         public event EventHandler<MigrationEventArgs> StepExecuted;
+        public event EventHandler<MigrationErrorEventArgs> StepErrored;
 
         private readonly ReadOnlyCollection<IScheduledMigrationMetadata> _scheduledMigrations;
         public ReadOnlyCollection<IScheduledMigrationMetadata> ScheduledMigrations { get { return _scheduledMigrations; } }
@@ -72,7 +73,15 @@ namespace MigSharp.Process
         {
             OnStepExecuting(new MigrationEventArgs(step.Metadata));
 
-            step.Execute(_versioning);
+            try
+            {
+                step.Execute(_versioning);
+            }
+            catch (Exception ex)
+            {
+                OnStepErrored(new MigrationErrorEventArgs(step.Metadata, ex));
+                throw;
+            }
 
             OnStepExecuted(new MigrationEventArgs(step.Metadata));
         }
@@ -86,6 +95,12 @@ namespace MigSharp.Process
         private void OnStepExecuted(MigrationEventArgs e)
         {
             EventHandler<MigrationEventArgs> tmp = StepExecuted;
+            if (tmp != null) tmp(this, e);
+        }
+
+        private void OnStepErrored(MigrationErrorEventArgs e)
+        {
+            EventHandler<MigrationErrorEventArgs> tmp = StepErrored;
             if (tmp != null) tmp(this, e);
         }
     }
