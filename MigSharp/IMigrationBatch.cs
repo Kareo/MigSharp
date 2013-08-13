@@ -9,6 +9,11 @@ namespace MigSharp
     public interface IMigrationBatch
     {
         /// <summary>
+        /// Raised when a migration errors during execution.
+        /// </summary>
+        event EventHandler<MigrationErrorEventArgs> StepErrored;
+
+        /// <summary>
         /// Raised before each migration that will be executed.
         /// </summary>
         event EventHandler<MigrationEventArgs> StepExecuting;
@@ -44,5 +49,7 @@ namespace MigSharp
         /// Indicates if <see cref="Execute"/> was already called.
         /// </summary>
         bool IsExecuted { get; }
+
+
     }
 }
