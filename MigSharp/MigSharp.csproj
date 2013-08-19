@@ -98,6 +98,7 @@
     <Compile Include="IMigrationMetadata.cs" />
     <Compile Include="Core\MigrationMetadata.cs" />
     <Compile Include="MigrationErrorEventArgs.cs" />
+    <Compile Include="MigrationExecutedEventArgs.cs" />
     <Compile Include="Process\ApplicableMigration.cs" />
     <Compile Include="Process\DbConnectionWrapper.cs" />
     <Compile Include="Process\ImportedMigration.cs" />

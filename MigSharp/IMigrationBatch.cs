@@ -21,7 +21,7 @@ namespace MigSharp
         /// <summary>
         /// Raised after each migration that has been executed.
         /// </summary>
-        event EventHandler<MigrationEventArgs> StepExecuted;
+        event EventHandler<MigrationExecutedEventArgs> StepExecuted;
 
         /// <summary>
         /// Gets a list of migrations which are pending and will be executed
